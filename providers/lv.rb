@@ -27,7 +27,16 @@ action :create do
   if lv_info_in_node_data(expanded_lv_name).nil?
     lv_info = lv_info(expanded_lv_name)
     if lv_info.nil?
-      cmd = "lvcreate -i#{new_resource.stripes} -I#{new_resource.stripe_size} -l #{new_resource.logical_extents} -n #{logical_volume_name} #{volume_group_name}"
+
+      cmd = String.new
+
+      case new_resource.mirror
+      when false
+        cmd = "lvcreate -i#{new_resource.stripes} -I#{new_resource.stripe_size} -l #{new_resource.logical_extents} -n #{logical_volume_name} #{volume_group_name}"
+      else
+        cmd = "lvcreate -m#{new_resource.mirror} -l #{new_resource.logical_extents} -n #{logical_volume_name} #{volume_group_name}"
+      end
+      
       execute cmd do
         action :nothing
       end.run_action(:run)
