@@ -21,6 +21,7 @@ actions :create
 attribute :volume_group_name, :kind_of => String, :default => 'vg'
 attribute :logical_volume_name, :kind_of => String, :default => 'lv'
 attribute :mirror, :kind_of => [FalseClass,Integer], :default => false
+attribute :corelog, :kind_of => [FalseClass,TrueClass], :default => false
 attribute :stripes, :kind_of => Integer
 attribute :stripe_size, :kind_of => Integer, :default => 8
 attribute :logical_extents, :kind_of => String, :default => '100%VG'

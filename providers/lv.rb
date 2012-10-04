@@ -35,6 +35,9 @@ action :create do
         cmd = "lvcreate -i#{new_resource.stripes} -I#{new_resource.stripe_size} -l #{new_resource.logical_extents} -n #{logical_volume_name} #{volume_group_name}"
       else
         cmd = "lvcreate -m#{new_resource.mirror} -l #{new_resource.logical_extents} -n #{logical_volume_name} #{volume_group_name}"
+        if new_resource.corelog
+          cmd = cmd + " --corelog"
+        end
       end
       
       execute cmd do
